@@ -9,7 +9,7 @@
  */
 int _count_tokens(char *str, char *delim)
 {
-	int count = 0;
+	int len = 0, count = 0;
 	char *token = NULL;
 	char *token_cnt_cpy = NULL;
 
@@ -20,10 +20,11 @@ int _count_tokens(char *str, char *delim)
 	while (token)
 	{
         count++;
+        len += strlen(token);
 		token = strtok(NULL, delim);
 	}
     free(token_cnt_cpy);
-	return (count);
+	return (count + len + 1);
 }
 
 /**

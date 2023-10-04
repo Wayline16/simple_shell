@@ -13,11 +13,13 @@ char **get_args(char *line)
     char *delim = " \n";
     char **args = NULL;
     int i = 0;
+    int size_tokens;
 
 
 	if (line == NULL)
          return (NULL);
-    args = malloc(sizeof(char *) * 30);
+    size_tokens = _count_tokens(line, delim);
+    args = malloc(sizeof(char *) * (size_tokens));
     if (args == NULL)
          return (NULL);
     tokens = strtok(line, delim);
@@ -29,6 +31,5 @@ char **get_args(char *line)
 		tokens = strtok(NULL, delim);
 	}
 	args[i] = NULL;
-    /*free(line_cpy);*/
 	return (args);
 }

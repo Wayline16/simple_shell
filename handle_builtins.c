@@ -7,7 +7,7 @@ int exe = 0, i = 0;
 
 	if (strcmp(args[0], "exit") == 0)
 	{
-		free_array(args);
+		free(args);
 		free(buffer);
 		exit(errno);
 	}

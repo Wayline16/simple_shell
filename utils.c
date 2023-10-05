@@ -9,22 +9,23 @@
  */
 int _count_tokens(char *str, char *delim)
 {
-	int len = 0, count = 0;
-	char *token = NULL;
-	char *token_cnt_cpy = NULL;
+    int len = 0, count = 0;
+    char *token = NULL;
+    char *token_cnt_cpy = NULL;
 
-	token_cnt_cpy = strdup(str);
-    if (token_cnt_cpy == NULL)
-         return (0);
-	token = strtok(token_cnt_cpy, delim);
-	while (token)
-	{
+    if (str == NULL)
+        return (count);
+    token_cnt_cpy = strdup(str);
+    token = strtok(token_cnt_cpy, delim);
+    while (token)
+    {
         count++;
         len += strlen(token);
-		token = strtok(NULL, delim);
-	}
+        token = strtok(NULL, delim);
+    }
+    len++;
     free(token_cnt_cpy);
-	return (count + len + 1);
+    return (count + len);
 }
 
 /**

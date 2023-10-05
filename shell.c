@@ -18,8 +18,8 @@ int main(int ac, char **av)
     int count = 0, i;
 
     NOTUSED(ac);
-
     NOTUSED(i);
+    errno = 0;
     while (1)
     {
         count++;
@@ -34,17 +34,17 @@ int main(int ac, char **av)
             free(readbuff);
             exit(errno);
         }
+        handle_comments(readbuff);
         args = get_args(readbuff);
-        if (args[0] == NULL)
+        if (args == NULL)
         {
-            free(args);
             continue;
         }
         if (handle_builtins(args, readbuff) == 1)
-             continue;
+            continue;
         if (is_valid_full_path(args) == 1)
         {
-             exec_full_path(args, av);
+            exec_full_path(args, av);
         }
         else
         {
@@ -52,9 +52,9 @@ int main(int ac, char **av)
             fullcmd = get_full_path(args[0]);
             if (fullcmd == NULL)
             {
-                free(args);
-                error_msg(av[0]);
+                error_msg(count, args[0], av[0]);
                 errno = 127;
+                free(args);
                 continue;
             }
             exec_full_path_cmd(args, av, fullcmd);

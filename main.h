@@ -19,7 +19,8 @@ void free_array(char **argv);
 char *extract_path(void);
 int is_valid_full_path(char **args);
 int exec_full_path(char **args, char **argv);
-void error_msg(char *prog);
+void error_msg(int prog_cnt, char *cmd, char *prog);
 char *get_full_path(char *cmd);
 int exec_full_path_cmd(char **args, char **argv, char *fullcmd);
+void handle_comments(char *buffer);
 #endif

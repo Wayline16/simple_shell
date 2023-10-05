@@ -32,7 +32,6 @@ int main(int ac, char **av)
         if (read_cnt == -1)
         {
             free(readbuff);
-            free(args);
             exit(errno);
         }
         args = get_args(readbuff);
@@ -44,13 +43,16 @@ int main(int ac, char **av)
         if (handle_builtins(args, readbuff) == 1)
              continue;
         if (is_valid_full_path(args) == 1)
+        {
              exec_full_path(args, av);
+        }
         else
         {
 
             fullcmd = get_full_path(args[0]);
             if (fullcmd == NULL)
             {
+                free(args);
                 error_msg(av[0]);
                 errno = 127;
                 continue;

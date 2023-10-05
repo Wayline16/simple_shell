@@ -32,6 +32,7 @@ int exec_full_path(char **args, char **argv)
             status = WEXITSTATUS(status);
         }
         errno = status;
+        free(args);
     }
 
     return (status);
@@ -72,6 +73,7 @@ int exec_full_path_cmd(char **args, char **argv, char *fullcmd)
         }
         errno = status;
         free(fullcmd);
+        free(args);
         return status;
     }
 

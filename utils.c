@@ -39,15 +39,15 @@ void free_array(char **argv)
 {
     int i = 0;
 
-    if (argv)
+    if (argv == NULL)
+        return;
+
+    while (argv[i] != NULL)
     {
-        while (argv[i] != NULL)
-        {
-            free(argv[i]);
-            i++;
-        }
-        free(argv);
+        free(argv[i]);
+        i++;
     }
+    free(argv);
 }
 
 int is_valid_full_path(char **args)

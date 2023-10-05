@@ -32,7 +32,7 @@ int main(int ac, char **av)
         if (read_cnt == -1)
         {
             free(readbuff);
-            free_array(args);
+            free(args);
             exit(errno);
         }
         args = get_args(readbuff);

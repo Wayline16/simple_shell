@@ -32,7 +32,6 @@ int exec_full_path(char **args, char **argv)
             status = WEXITSTATUS(status);
         }
         errno = status;
-        return status;
     }
 
     return (status);

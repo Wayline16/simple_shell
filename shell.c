@@ -13,22 +13,23 @@ int main(int ac, char **av)
     char **args = NULL;
     size_t n = 0;
     ssize_t read_cnt = 0;
-    char *readbuff = NULL, *fullcmd = NULL;
+    char *errmsg, *readbuff = NULL, *fullcmd = NULL;
     int shell_mode = isatty(0);
-    int count = 0, i;
+    int i;
 
     NOTUSED(ac);
     NOTUSED(i);
     errno = 0;
+    prog_count = 0;
     while (1)
     {
-        count++;
+        prog_count++;
         if (shell_mode == 1)
         {
             write(1, prompt, 4);
             fflush(stdout);
         }
-        read_cnt = getline(&readbuff, &n, stdin);
+        read_cnt = _getline(&readbuff, &n, stdin);
         if (read_cnt == -1)
         {
             free(readbuff);
@@ -40,7 +41,7 @@ int main(int ac, char **av)
         {
             continue;
         }
-        if (handle_builtins(args, readbuff) == 1)
+        if (handle_builtins(args, readbuff, av[0]) == 1)
             continue;
         if (is_valid_full_path(args) == 1)
         {
@@ -52,7 +53,8 @@ int main(int ac, char **av)
             fullcmd = get_full_path(args[0]);
             if (fullcmd == NULL)
             {
-                error_msg(count, args[0], av[0]);
+                errmsg = ": not found";
+                error_msg(prog_count, args[0], av[0], errmsg, args[1], 0);
                 errno = 127;
                 free(args);
                 continue;

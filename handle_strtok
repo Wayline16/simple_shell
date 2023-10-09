@@ -1,0 +1,60 @@
+#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * Custom strtok function that tokenizes a string based on a delimiter.
+ *
+ * @param str   The string to tokenize.
+ * @param delim The delimiter character.
+ *
+ * @return      Pointer to the next token, or NULL if there are no more tokens.
+ */
+char *custom_strtok(char *str, const char *delim) {
+    static char *next_token = NULL;
+    char *token;
+    
+    if (str != NULL) {
+        next_token = str;
+    }
+    
+    if (next_token == NULL || *next_token == '\0') {
+        return NULL;
+    }
+    
+    // Find the beginning of the token
+    token = next_token;
+    
+    // Find the end of the token
+    while (*next_token != '\0' && strchr(delim, *next_token) != NULL) {
+        next_token++;
+    }
+    
+    // If we found a delimiter, replace it with '\0'
+    if (*next_token != '\0') {
+        *next_token = '\0';
+        next_token++;
+    }
+    
+    return token;
+}
+
+/**
+ * Custom strchr function that searches for the first occurrence of a character in a string.
+ *
+ * @param str   The string to search in.
+ * @param c     The character to find.
+ *
+ * @return      Pointer to the first occurrence of 'c' in 'str', or NULL if 'c' is not found.
+ */
+char *custom_strchr(const char *str, int c) {
+    while (*str != '\0') {
+        if (*str == c) {
+            return (char *)str;
+        }
+        str++;
+    }
+    
+    return NULL; // Character 'c' not found in 'str'
+}

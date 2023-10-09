@@ -76,3 +76,72 @@ int is_valid_full_path(char **args)
         return -1;
     }
 }
+
+char *int_to_string(char *str, int num)
+{
+    int len, tmp, digit, i;
+    /*Check if the number is negative.*/
+    int is_negative = num < 0;
+    if (is_negative)
+    {
+        /*Convert the number to positive.*/
+        num = -num;
+        /*Add a minus sign to the beginning of the string.*/
+        *str++ = '-';
+    }
+
+    /*Calculate the length of the string.*/
+    len = 0;
+    tmp = num;
+    while (tmp > 0)
+    {
+        len++;
+        tmp /= 10;
+    }
+
+    /*Convert the number to a string, digit by digit, in reverse order.*/
+    i = len - 1;
+    while (num > 0)
+    {
+        digit = num % 10;
+        str[i--] = digit + '0';
+        num /= 10;
+    }
+
+    /*Add a null terminator to the end of the string.*/
+    str[len] = '\0';
+
+    return str;
+}
+
+int is_digit_string(char *s)
+{
+    /*Check if the string is empty.*/
+    if (*s == '\0')
+    {
+        return 0;
+    }
+
+    /*Check if the first character of the string is a minus sign.*/
+    if (*s == '-')
+    {
+        /*Advance to the next character in the string.*/
+        s++;
+    }
+
+    /*Iterate over the rest of the string, checking each character.*/
+    while (*s != '\0')
+    {
+        /*If the character is not a digit, return 0.*/
+        if (!isdigit(*s))
+        {
+            return 0;
+        }
+
+        /*Advance to the next character in the string.*/
+        s++;
+    }
+
+    /*If we reach here, then all of the characters in the string were digits.*/
+    return 1;
+}

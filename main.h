@@ -30,10 +30,4 @@ ssize_t _getline(char **pline, size_t *plsize, FILE *fp);
 int exit_status(char *arg, char *prog);
 char *int_to_string(char *str, int num);
 int is_digit_string(char *s);
-
-char *custom_strtok(char *str, const char *delim);
-size_t strlen(const char *str);
-char *strcpy(char *dest, const char *src);
-char *custom_strchr(const char *str, int c);
-
 #endif

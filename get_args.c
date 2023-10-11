@@ -19,13 +19,13 @@ char **get_args(char *line)
      args = malloc(sizeof(char *) * (size_tokens));
      if (args == NULL)
           return (NULL);
-     tokens = strtok(line, delim);
+     tokens = custom_strtok(line, delim);
      if (tokens == NULL)
           return (NULL);
      while (tokens != NULL)
      {
           args[i++] = tokens;
-          tokens = strtok(NULL, delim);
+          tokens = custom_strtok(NULL, delim);
      }
      args[i] = NULL;
      return (args);

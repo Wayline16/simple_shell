@@ -145,3 +145,29 @@ int is_digit_string(char *s)
     /*If we reach here, then all of the characters in the string were digits.*/
     return 1;
 }
+
+int flag_delim(char **str, char delim)
+{
+    int flag = 0, j = 0, k = 0;
+
+    for (;str[j] != NULL; j++)
+    {
+        k = 0;
+        while (str[j][k] != '\0')
+        {
+            if (str[j][k] == delim)
+            {
+                if(str[j][k + 1] == delim)
+                {
+                    flag = 2;
+                    break;
+                }
+                else
+                    flag = 1;
+
+            }
+            k++;
+        }
+    }
+    return (flag);
+}

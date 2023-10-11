@@ -29,7 +29,7 @@ int main(int ac, char **av)
             write(1, prompt, 4);
             fflush(stdout);
         }
-        read_cnt = _getline(&readbuff, &n, stdin);
+        read_cnt = getline(&readbuff, &n, stdin);
         if (read_cnt == -1)
         {
             free(readbuff);
@@ -41,7 +41,8 @@ int main(int ac, char **av)
         {
             continue;
         }
-        if (handle_builtins(args, readbuff, av[0]) == 1)
+        handle_op(args);
+        if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])  == 1)
             continue;
         if (is_valid_full_path(args) == 1)
         {

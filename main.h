@@ -27,7 +27,10 @@ char *get_full_path(char *cmd);
 int exec_full_path_cmd(char **args, char **argv, char *fullcmd);
 void handle_comments(char *buffer);
 int alloc_line(char **pline, size_t *plsize, size_t newsize);
-ssize_t _getline(char **pline, size_t *plsize, FILE *fp);
+
+/*ssize_t _getline(char **pline, size_t *plsize, FILE *fp);*/
+size_t custom_getline(char **lineptr, size_t *n, FILE *stream);
+
 int exit_status(char *arg, char *prog);
 char *int_to_string(char *str, int num);
 int is_digit_string(char *s);

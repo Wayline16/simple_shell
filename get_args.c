@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 /**
  *	_get_args - extracts the arguments.
  *	@line: string containing arguments.

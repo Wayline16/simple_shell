@@ -32,7 +32,7 @@ int alloc_line(char **pline, size_t *plsize, size_t newsize);
 size_t custom_getline(char **lineptr, size_t *n, FILE *stream);
 
 int exit_status(char *arg, char *prog);
-char *int_to_string(char *str, int num);
+char *int_to_string(int num);
 int is_digit_string(char *s);
 int _cd(char **args);
 int _cd_HOME(void);

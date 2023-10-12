@@ -77,21 +77,34 @@ int is_valid_full_path(char **args)
     }
 }
 
-char *int_to_string(char *str, int num)
+char *int_to_string(int num)
 {
-    int len, tmp, digit, i;
-    /*Check if the number is negative.*/
-    int is_negative = num < 0;
+    /* Calculate the length of the string. */
+    int i, is_negative, digit, len = 0;
+    int tmp;
+    char *str;
+
+    /* Check if the number is 0. */
+    if (num == 0)
+    {
+        /* Return a string containing a single 0 character. */
+        str = malloc(2 * sizeof(char));
+        if (str == NULL)
+        {
+            return NULL;
+        }
+        str[0] = '0';
+        str[1] = '\0';
+        return str;
+    }
+    is_negative = num < 0;
     if (is_negative)
     {
-        /*Convert the number to positive.*/
+        /* Multiply the number by -1 to make it positive. */
         num = -num;
-        /*Add a minus sign to the beginning of the string.*/
-        *str++ = '-';
+        /* Add extend length of the string. */
+        len++;
     }
-
-    /*Calculate the length of the string.*/
-    len = 0;
     tmp = num;
     while (tmp > 0)
     {
@@ -99,7 +112,14 @@ char *int_to_string(char *str, int num)
         tmp /= 10;
     }
 
-    /*Convert the number to a string, digit by digit, in reverse order.*/
+    /* Allocate memory for the string. */
+    str = malloc((len + 1) * sizeof(char));
+    if (str == NULL)
+    {
+        return NULL;
+    }
+
+    /* Convert the number to a string, digit by digit, in reverse order. */
     i = len - 1;
     while (num > 0)
     {
@@ -108,7 +128,12 @@ char *int_to_string(char *str, int num)
         num /= 10;
     }
 
-    /*Add a null terminator to the end of the string.*/
+    if (is_negative)
+    {
+        /* Add extend length of the string. */
+        str[0] = '-';
+    }
+    /* Add a null terminator to the end of the string. */
     str[len] = '\0';
 
     return str;

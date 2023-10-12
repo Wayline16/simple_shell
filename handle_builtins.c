@@ -46,7 +46,7 @@ int exit_status(char *arg, char *prog)
 {
 	int num = 0;
 	int sign = 1;
-	char *errmsg, *cmd;
+	char *errmsg, *cmd, *errnum = NULL;
 
 	errmsg = ": Illegal number";
 	cmd = "exit";
@@ -68,8 +68,9 @@ int exit_status(char *arg, char *prog)
 		if (sign == -1)
 		{
 			num = sign * num;
-			int_to_string(arg, num);
-			error_msg(prog_count, cmd, prog, errmsg, arg, 1);
+			errnum = int_to_string(num);
+			error_msg(prog_count, cmd, prog, errmsg, errnum, 1);
+			free(errnum);
 			return (2);
 		}
 	}

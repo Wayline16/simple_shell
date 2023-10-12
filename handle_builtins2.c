@@ -3,6 +3,7 @@
 int handle_builtins2(char **args, char *buffer, char *prog)
 {
 	int overwrite, exe = 0;
+    char *errnum;
 
 
     NOTUSED(prog);
@@ -22,6 +23,20 @@ int handle_builtins2(char **args, char *buffer, char *prog)
         _unsetenv(args[1]);
         exe = 1;
         free(args);
+    }
+    else if (strcmp(args[0], "echo") == 0)
+    {
+        if (args[1] == NULL)
+            write(1, "\n", 1);
+        if (strcmp(args[1], "$?") == 0)
+        {
+            errnum = int_to_string(errno);
+            write(1, errnum, strlen(errnum));
+            write(1, "\n", 2);
+        }
+        exe = 1;
+        free(args);
+        free(errnum);
     }
 
     return (exe);

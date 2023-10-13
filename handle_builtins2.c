@@ -26,7 +26,12 @@ int handle_builtins2(char **args, char *buffer, char *prog)
     else if (strcmp(args[0], "echo") == 0)
     {
         if (args[1] == NULL)
+        {
             write(1, "\n", 1);
+            exe = 1;
+            free(args);
+            return (exe);
+        }
         if (strcmp(args[1], "$?") == 0 && args[2] == NULL)
         {
             handle_echo_status();
@@ -70,7 +75,8 @@ void handle_echo_pid(void)
 void handle_echo_args(char **args)
  {
     int i = 1;
-    char *args_ptr;
+    char *args_ptr, *path_buf;
+
     while (args[i] != NULL)
             {
                 args_ptr = args[i];
@@ -90,13 +96,23 @@ void handle_echo_args(char **args)
                     else
                         write(1, "\n", 2);
                 }
+                else if (*args_ptr == '$' && (strcmp(args_ptr + 1, "PATH") == 0 || strcmp(args_ptr + 1, "path") == 0))
+                {
+                    path_buf = extract_path();
+                    write(1, path_buf, strlen(path_buf));
+                    free(path_buf);
+                    if (args[i + 1] != NULL)
+                        write(1, " ", 1);
+                    else
+                        write(1, "\n", 2);
+                }
                 else
                 {
                     while (*args_ptr != '\0')
                     {
                         if (*args_ptr != '\\')
                             write(1, args_ptr, 1);
-                    args_ptr++;
+                        args_ptr++;
                     }
                     if (args[i + 1] != NULL)
                         write(1, " ", 1);

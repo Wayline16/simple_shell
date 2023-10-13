@@ -42,4 +42,7 @@ int flag_delim(char **str, char delim);
 char **handle_op(char **args);
 char **create_array(char **args, char *delim);
 char *custom_strtok(char *str, const char *delimiters);
+void handle_echo_status(void);
+void handle_echo_pid(void);
+void handle_echo_args(char **args);
 #endif

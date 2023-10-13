@@ -3,7 +3,6 @@
 int handle_builtins2(char **args, char *buffer, char *prog)
 {
 	int overwrite, exe = 0;
-    char *errnum;
 
 
     NOTUSED(prog);
@@ -28,16 +27,82 @@ int handle_builtins2(char **args, char *buffer, char *prog)
     {
         if (args[1] == NULL)
             write(1, "\n", 1);
-        if (strcmp(args[1], "$?") == 0)
+        if (strcmp(args[1], "$?") == 0 && args[2] == NULL)
         {
-            errnum = int_to_string(errno);
-            write(1, errnum, strlen(errnum));
+            handle_echo_status();
             write(1, "\n", 2);
+        }
+        else if (strcmp(args[1], "$$") == 0 && args[2] == NULL)
+        {
+           handle_echo_pid();
+           write(1, "\n", 2);
+        }
+        else
+        {
+            handle_echo_args(args);
         }
         exe = 1;
         free(args);
-        free(errnum);
     }
 
     return (exe);
 }
+
+void handle_echo_status(void)
+{
+    char *errnum;
+    errnum = int_to_string(errno);
+    write(1, errnum, strlen(errnum));
+    free(errnum);
+}
+
+void handle_echo_pid(void)
+{
+    char *pid_str;
+    int pid;
+
+    pid = getpid();
+    pid_str = int_to_string(pid);
+    write(1, pid_str, strlen(pid_str));
+    free(pid_str);
+}
+
+void handle_echo_args(char **args)
+ {
+    int i = 1;
+    char *args_ptr;
+    while (args[i] != NULL)
+            {
+                args_ptr = args[i];
+                if (strcmp(args_ptr, "$$") == 0)
+                {
+                    handle_echo_pid();
+                    if (args[i + 1] != NULL)
+                        write(1, " ", 1);
+                    else
+                        write(1, "\n", 2);
+                }
+                else if ((strcmp(args_ptr, "$?") == 0))
+                {
+                    handle_echo_status();
+                    if (args[i + 1] != NULL)
+                        write(1, " ", 1);
+                    else
+                        write(1, "\n", 2);
+                }
+                else
+                {
+                    while (*args_ptr != '\0')
+                    {
+                        if (*args_ptr != '\\')
+                            write(1, args_ptr, 1);
+                    args_ptr++;
+                    }
+                    if (args[i + 1] != NULL)
+                        write(1, " ", 1);
+                    else
+                        write(1, "\n", 2);
+                }
+                i++;
+            }
+ }

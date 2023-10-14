@@ -2,9 +2,8 @@
 
 char **handle_op(char **args)
 {
-    flag_delim(args, ';');
+    flag_arraydelim(args, ';');
 
        return args;
 }
-
 

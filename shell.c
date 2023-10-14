@@ -33,6 +33,7 @@ int main(int ac, char **av)
         if (read_cnt == -1)
         {
             free(readbuff);
+            free_aliases();
             exit(errno);
         }
         handle_comments(readbuff);
@@ -42,7 +43,8 @@ int main(int ac, char **av)
             continue;
         }
         handle_op(args);
-        if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])  == 1)
+        if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])
+        || handle_alias(args, readbuff, av[0]) == 1)
             continue;
         if (is_valid_full_path(args) == 1)
         {

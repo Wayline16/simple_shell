@@ -10,14 +10,29 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <ctype.h>
+
 extern char **environ;
 int prog_count;
+
+typedef struct alias {
+  char *name;
+  char *value;
+} alias_t;
+
+
+void print_all_aliases();
+alias_t *get_alias(char *name);
+void print_aliases(char *names);
+void define_alias(char *name, char *value);
+void remove_alias(char *name);
+void free_aliases();
 
 int _count_tokens(char *str, char *delim);
 int _size_tokens(char *str, char *delim);
 char **get_args(char *line);
 int handle_builtins(char **args, char *buffer, char *prog);
 int handle_builtins2(char **args, char *buffer, char *prog);
+int handle_alias(char **args, char *buffer, char *prog);
 void free_array(char **argv);
 char *extract_path(void);
 int is_valid_full_path(char **args);
@@ -38,11 +53,15 @@ int _cd(char **args);
 int _cd_HOME(void);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
-int flag_delim(char **str, char delim);
+int flag_arraydelim(char **str, char delim);
+int flag_delim(char *str, char delim);
 char **handle_op(char **args);
-char **create_array(char **args, char *delim);
+char ***create_cmd_array(char **args, char *delim);
 char *custom_strtok(char *str, const char *delimiters);
 void handle_echo_status(void);
 void handle_echo_pid(void);
 void handle_echo_args(char **args);
+char *get_alias_name(char *str);
+char *get_alias_value(char *str);
+
 #endif

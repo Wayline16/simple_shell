@@ -171,7 +171,7 @@ int is_digit_string(char *s)
     return 1;
 }
 
-int flag_delim(char **str, char delim)
+int flag_arraydelim(char **str, char delim)
 {
     int flag = 0, j = 0, k = 0;
 
@@ -196,3 +196,27 @@ int flag_delim(char **str, char delim)
     }
     return (flag);
 }
+
+int flag_delim(char *str, char delim)
+{
+    int flag = 0, j = 0;
+
+        while (str[j] != '\0')
+        {
+            if (str[j] == delim)
+            {
+                if(str[j + 1] == delim)
+                {
+                    flag = 2;
+                    break;
+                }
+                else
+                    flag = 1;
+
+            }
+            j++;
+        }
+
+    return (flag);
+}
+

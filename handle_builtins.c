@@ -12,12 +12,14 @@ int handle_builtins(char **args, char *buffer, char *prog)
 			errno = exit_status(args[1], prog);
 			free(args);
 			free(buffer);
+			free_aliases();
 			exit(errno);
 		}
 		else
 		{
 			free(args);
 			free(buffer);
+			free_aliases();
 			exit(errno);
 		}
 	}

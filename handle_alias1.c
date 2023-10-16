@@ -7,7 +7,10 @@ int num_aliases = 0;
 /*Define an alias.*/
 void define_alias(char *name, char *value)
 {
-    alias_t *alias = get_alias(name);
+    char *cmd = NULL;
+    alias_t *alias;
+
+    alias = get_alias(name);
     if (alias != NULL)
     {
         free(alias->value);
@@ -27,7 +30,15 @@ void define_alias(char *name, char *value)
 
         alias = malloc(sizeof(alias_t));
         alias->name = strdup(name);
-        alias->value = strdup(value);
+        cmd = get_command_by_name(value);
+        if (cmd != NULL)
+        {
+            alias->value = strdup(cmd);
+        }
+        else
+        {
+            alias->value = strdup(value);
+        }
 
         aliases[num_aliases++] = alias;
     }
@@ -121,6 +132,21 @@ void print_all_aliases()
             write(STDOUT_FILENO, "\n", 1);
         }
     }
+}
+
+/*Get command by name from added aliases.*/
+char *get_command_by_name(char *name)
+{
+    int i;
+    for (i = 0; i < num_aliases; i++)
+    {
+        if (strcmp(aliases[i]->name, name) == 0)
+        {
+            return aliases[i]->value;
+        }
+    }
+
+    return NULL;
 }
 
 /*Free all of the aliases in the aliases array.*/

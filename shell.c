@@ -43,6 +43,7 @@ int main(int ac, char **av)
             continue;
         }
         handle_op(args);
+        check_alias(args);
         if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])
         || handle_alias(args, readbuff, av[0]) == 1)
             continue;

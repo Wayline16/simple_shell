@@ -25,6 +25,7 @@ alias_t *get_alias(char *name);
 void print_aliases(char *names);
 void define_alias(char *name, char *value);
 void remove_alias(char *name);
+char *get_command_by_name(char *name);
 void free_aliases();
 
 int _count_tokens(char *str, char *delim);
@@ -41,7 +42,7 @@ void error_msg(int prog_cnt, char *cmd, char *prog, char *msg, char *arg, int mo
 char *get_full_path(char *cmd);
 int exec_full_path_cmd(char **args, char **argv, char *fullcmd);
 void handle_comments(char *buffer);
-int alloc_line(char **pline, size_t *plsize, size_t newsize);
+char **check_alias(char **args);
 
 /*ssize_t _getline(char **pline, size_t *plsize, FILE *fp);*/
 size_t custom_getline(char **lineptr, size_t *n, FILE *stream);

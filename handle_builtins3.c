@@ -50,10 +50,6 @@ int handle_alias(char **args, char *buffer, char *prog)
     return (exe);
 }
 
-
-
-
-
 char *get_alias_name(char *str)
 {
     char *name = NULL;
@@ -82,41 +78,42 @@ char *get_alias_value(char *str)
 {
     char *value = NULL;
     char *sign;
+    int len, i;
 
     sign = strchr(str, '=');
     if (sign == NULL)
         return (NULL);
     if (sign != NULL)
     {
-        value = malloc(strlen(sign + 1) + 1);
+
+        for (i = 0; sign[i] != '\0'; i++)
+        {
+            if (sign[i] == '\'' && sign[i + 1] == '\0')
+            {
+                len = i;
+                sign[i] = '\0';
+                break;
+            }
+            else
+            {
+                len = strlen(sign + 1);
+            }
+        }
+
+        value = malloc(len + 1);
         if (value == NULL)
         {
             free(value);
             return (NULL);
         }
-        strcpy(value, sign + 1);
+        if (sign[1] == '\'')
+        {
+            strcpy(value, sign + 2);
+        }
+        else
+        {
+            strcpy(value, sign + 1);
+        }
     }
     return (value);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

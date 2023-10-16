@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <ctype.h>
+#include <fcntl.h>
 
 extern char **environ;
 int prog_count;

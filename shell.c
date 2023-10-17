@@ -29,7 +29,7 @@ int main(int ac, char **av)
             write(1, prompt, 4);
             fflush(stdout);
         }
-        read_cnt = getline(&readbuff, &n, stdin);
+        read_cnt = custom_getline(&readbuff, &n, stdin);
         if (read_cnt == -1)
         {
             free(readbuff);

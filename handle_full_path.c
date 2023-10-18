@@ -22,11 +22,11 @@ char *get_full_path(char *cmd)
         free(paths);
         return (NULL);
     }
-    directory = strtok(paths, ":");
+    directory = custom_strtok(paths, ":");
     while (directory != NULL)
     {
         directories[num_directories++] = directory;
-        directory = strtok(NULL, ":");
+        directory = custom_strtok(NULL, ":");
     }
 
     /*Search each directory in the $PATH environment variable for the command.*/

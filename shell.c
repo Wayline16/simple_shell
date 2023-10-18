@@ -29,7 +29,7 @@ int main(int ac, char **av)
             write(1, prompt, 4);
             fflush(stdout);
         }
-        read_cnt = custom_getline(&readbuff, &n, stdin);
+        read_cnt = getline(&readbuff, &n, stdin);
         if (read_cnt == -1)
         {
             free(readbuff);
@@ -44,7 +44,7 @@ int main(int ac, char **av)
         }
         check_alias(args);
         if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])
-        || handle_alias(args, readbuff, av[0]) || handle_file_test(args, av[0]) == 1)
+        || handle_alias(args, readbuff, av[0]) || handle_file(args, av[0]) == 1)
             continue;
         if (is_valid_full_path(args) == 1)
         {

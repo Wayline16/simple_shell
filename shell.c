@@ -19,7 +19,7 @@ int main(int ac, char **av)
     NOTUSED(ac);
     errno = 0;
     prog_count = 0;
-    init_aliases();
+
     while (1)
     {
         prog_count++;

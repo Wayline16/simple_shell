@@ -28,9 +28,7 @@ char *name;
 char *value;
 } alias_t;
 
-alias_t **aliases;
-int num_aliases;
-void init_aliases(void);
+
 /*alias handlers*/
 int handle_alias(char **args, char *buffer, char *prog);
 void print_all_aliases(void);

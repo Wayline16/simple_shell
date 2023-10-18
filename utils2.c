@@ -60,3 +60,14 @@ int flag_delim(char *str, char delim)
 
     return (flag);
 }
+
+/**
+ * init_aliases - initialize aliases
+ *
+ * Return: noting.
+ */
+void init_aliases(void)
+{
+    aliases = NULL;
+    num_aliases = 0;
+}

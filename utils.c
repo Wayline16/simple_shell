@@ -188,4 +188,3 @@ int is_digit_string(char *s)
     /*If we reach here, then all of the characters in the string were digits.*/
     return 1;
 }
-

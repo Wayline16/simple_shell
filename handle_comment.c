@@ -8,21 +8,19 @@
 
 void handle_comments(char *buffer)
 {
-    char *p = buffer;
+	char *p = buffer;
 
-    while (*p)
-    {
-        if (p > buffer && *p == '#' && *(p - 1) != ' ')
-        {
-            break;
-        }
-
-        if (*p == '#')
-        {
-            *p = '\0';
-            break;
-        }
-
-        p++;
-    }
+	while (*p)
+	{
+		if (p > buffer && *p == '#' && *(p - 1) != ' ')
+		{
+			break;
+		}
+		if (*p == '#')
+		{
+			*p = '\0';
+			break;
+		}
+		p++;
+	}
 }

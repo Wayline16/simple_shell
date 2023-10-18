@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
- *	handle_builtins - handle builtin functions
- *  @args: input tokenized arguments
- *  @buffer: input buffer from getline
- * 	@prog: shell program name
- *	Return: execution status
+ * handle_builtins - handle builtin functions
+ * @args: input tokenized arguments
+ * @buffer: input buffer from getline
+ * @prog: shell program name
+ * Return: execution status
  */
 int handle_builtins(char **args, char *buffer, char *prog)
 {
@@ -52,10 +52,10 @@ int handle_builtins(char **args, char *buffer, char *prog)
 }
 
 /**
- *	exit_status - handle the exit status value
- *  @arg: input tokenized arguments of exit value
- * 	@prog: shell program name
- *	Return: execution status
+ * exit_status - handle the exit status value
+ * @arg: input tokenized arguments of exit value
+ * @prog: shell program name
+ * Return: execution status
  */
 int exit_status(char *arg, char *prog)
 {

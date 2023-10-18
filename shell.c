@@ -15,12 +15,11 @@ int main(int ac, char **av)
     ssize_t read_cnt = 0;
     char *errmsg, *readbuff = NULL, *fullcmd = NULL;
     int shell_mode = isatty(0);
-    int i;
 
     NOTUSED(ac);
-    NOTUSED(i);
     errno = 0;
     prog_count = 0;
+    init_aliases();
     while (1)
     {
         prog_count++;
@@ -44,7 +43,7 @@ int main(int ac, char **av)
         }
         check_alias(args);
         if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])
-        || handle_alias(args, readbuff, av[0]) || handle_file(args, av[0]) == 1)
+        || handle_builtins_echo(args, readbuff, av[0]) || handle_alias(args, readbuff, av[0]))
             continue;
         if (is_valid_full_path(args) == 1)
         {

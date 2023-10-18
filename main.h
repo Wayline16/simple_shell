@@ -22,14 +22,18 @@ int prog_count;
  * @name:name of alias
  * @value: value of alias
  */
-typedef struct alias {
-  char *name;
-  char *value;
+typedef struct alias
+{
+char *name;
+char *value;
 } alias_t;
 
+alias_t **aliases;
+int num_aliases;
+void init_aliases(void);
 /*alias handlers*/
 int handle_alias(char **args, char *buffer, char *prog);
-void print_all_aliases();
+void print_all_aliases(void);
 alias_t *get_alias(char *name);
 void print_aliases(char *names);
 void define_alias(char *name, char *value);
@@ -38,10 +42,11 @@ char *get_command_by_name(char *name);
 char *get_alias_name(char *str);
 char *get_alias_value(char *str);
 char **check_alias(char **args);
-void free_aliases();
+void free_aliases(void);
 /*builtin command handlers*/
 int handle_builtins(char **args, char *buffer, char *prog);
 int handle_builtins2(char **args, char *buffer, char *prog);
+int handle_builtins_echo(char **args, char *buffer, char *prog);
 int _cd(char **args);
 int _cd_HOME(void);
 int _setenv(const char *name, const char *value, int overwrite);
@@ -50,8 +55,7 @@ void handle_echo_status(void);
 void handle_echo_pid(void);
 void handle_echo_args(char **args);
 int exit_status(char *arg, char *prog);
-int handle_file(char **args, char *prog);
-int handle_file_test(char **args, char *prog);
+
 /*command path handlers*/
 char *extract_path(void);
 int exec_full_path(char **args, char **argv);
@@ -65,7 +69,8 @@ int is_digit_string(char *s);
 int flag_arraydelim(char **str, char delim);
 int flag_delim(char *str, char delim);
 /*error msg handlers*/
-void error_msg(int prog_cnt, char *cmd, char *prog, char *msg, char *arg, int mode);
+void error_msg(int prog_cnt, char *cmd,
+char *prog, char *msg, char *arg, int mode);
 /*input handlers*/
 void handle_comments(char *buffer);
 size_t custom_getline(char **lineptr, size_t *n, FILE *stream);
@@ -74,5 +79,4 @@ int _size_tokens(char *str, char *delim);
 char **get_args(char *line);
 char **handle_op(char **args);
 char *custom_strtok(char *str, const char *delimiters);
-
 #endif

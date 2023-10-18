@@ -9,25 +9,40 @@
  */
 char *custom_strtok(char *str, const char *delimiters)
 {
-	char *nextToken = NULL;
+	static char *nextToken = NULL;
 	char *tokenStart;
 
 	if (str != NULL)
+	{
 		nextToken = str;
+	}
+
 	if (nextToken == NULL || *nextToken == '\0')
-		return (NULL);
+	{
+		return NULL;
+	}
+
 	while (*nextToken != '\0' && strchr(delimiters, *nextToken) != NULL)
+	{
 		nextToken++;
+	}
+
 	if (*nextToken == '\0')
-		return (NULL);
+	{
+		return NULL;
+	}
+
 	tokenStart = nextToken;
 	while (*nextToken != '\0' && strchr(delimiters, *nextToken) == NULL)
+	{
 		nextToken++;
+	}
+
 	if (*nextToken != '\0')
 	{
 		*nextToken = '\0';
 		nextToken++;
 	}
 
-	return (tokenStart);
+	return tokenStart;
 }

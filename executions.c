@@ -38,7 +38,6 @@ int exec_full_path(char **args, char **argv)
     return (status);
 }
 
-
 /**
  * exec_full_path_cmd - Executes the appended full path command
  * @args: An array of user arguments

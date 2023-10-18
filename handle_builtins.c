@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ *	handle_builtins - handle builtin functions
+ *  @args: input tokenized arguments
+ *  @buffer: input buffer from getline
+ * 	@prog: shell program name
+ *	Return: execution status
+ */
 int handle_builtins(char **args, char *buffer, char *prog)
 {
 	int exe = 0, i = 0;
@@ -44,6 +51,12 @@ int handle_builtins(char **args, char *buffer, char *prog)
 	return (exe);
 }
 
+/**
+ *	exit_status - handle the exit status value
+ *  @arg: input tokenized arguments of exit value
+ * 	@prog: shell program name
+ *	Return: execution status
+ */
 int exit_status(char *arg, char *prog)
 {
 	int num = 0;

@@ -42,10 +42,9 @@ int main(int ac, char **av)
         {
             continue;
         }
-        handle_op(args);
         check_alias(args);
         if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])
-        || handle_alias(args, readbuff, av[0]) == 1)
+        || handle_alias(args, readbuff, av[0]) || handle_file(args, av[0]) == 1)
             continue;
         if (is_valid_full_path(args) == 1)
         {

@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ *	extract_path - extracts the path from environ.
+ *
+ *	Return: array of enviroment.
+ */
 char *extract_path(void)
 {
     int index = 0, length = 0;

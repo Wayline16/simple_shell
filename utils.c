@@ -32,7 +32,7 @@ int _count_tokens(char *str, char *delim)
  * free_array - Frees an array of dynamically allocated string
  * @argc: Number to be freed
  * @argv: Array of dynamically allocated strings
- * Author: Wassim Haimoudi
+ *
  * Return: Void
  */
 
@@ -51,6 +51,12 @@ void free_array(char **argv)
     free(argv);
 }
 
+/**
+ * is_valid_full_path - check if command is valid path or not
+ * @args: command arguments to check
+ *
+ * Return: 1 if valid path ,-1 error,0 otherwise
+ */
 int is_valid_full_path(char **args)
 {
     int ret;
@@ -77,6 +83,12 @@ int is_valid_full_path(char **args)
     }
 }
 
+/**
+ * int_to_string - int to char convertor
+ * @num: int to convert
+ *
+ * Return: converted char
+ */
 char *int_to_string(int num)
 {
     /* Calculate the length of the string. */
@@ -139,6 +151,12 @@ char *int_to_string(int num)
     return str;
 }
 
+/**
+ * is_digit_string - check if char is digit or not
+ * @s: char to check
+ *
+ * Return: 1 if digit,0 otherwise
+ */
 int is_digit_string(char *s)
 {
     /*Check if the string is empty.*/
@@ -169,54 +187,5 @@ int is_digit_string(char *s)
 
     /*If we reach here, then all of the characters in the string were digits.*/
     return 1;
-}
-
-int flag_arraydelim(char **str, char delim)
-{
-    int flag = 0, j = 0, k = 0;
-
-    for (;str[j] != NULL; j++)
-    {
-        k = 0;
-        while (str[j][k] != '\0')
-        {
-            if (str[j][k] == delim)
-            {
-                if(str[j][k + 1] == delim)
-                {
-                    flag = 2;
-                    break;
-                }
-                else
-                    flag = 1;
-
-            }
-            k++;
-        }
-    }
-    return (flag);
-}
-
-int flag_delim(char *str, char delim)
-{
-    int flag = 0, j = 0;
-
-        while (str[j] != '\0')
-        {
-            if (str[j] == delim)
-            {
-                if(str[j + 1] == delim)
-                {
-                    flag = 2;
-                    break;
-                }
-                else
-                    flag = 1;
-
-            }
-            j++;
-        }
-
-    return (flag);
 }
 

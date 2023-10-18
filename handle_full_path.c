@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * get_full_path - get full path of command
+ * @cmd: command name
+ *
+ * Return: fulle path of command name
+ */
 char *get_full_path(char *cmd)
 {
     char *paths = extract_path();

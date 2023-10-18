@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * _setenv - sets enviroment
+ * @name: enviroment name to set
+ * @value: enviroment value to set
+ * @overwrite: to overwrite value if exist
+ * Return: execution status
+ */
 int _setenv(const char *name, const char *value, int overwrite)
 {
     char *es;

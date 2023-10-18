@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * custom_strtok - Tokenizes a string.
+ * @str: The string.
+ * @delimiters: delimiter character to tokenize the string
+ *
+ * Return: A pointer to an array containing the tokenized words.
+ */
 char *custom_strtok(char *str, const char *delimiters)
 {
     static char *nextToken = NULL;

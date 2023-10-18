@@ -4,7 +4,12 @@
 alias_t **aliases = NULL;
 int num_aliases = 0;
 
-/*Define an alias.*/
+/**
+ *	define_alias - Define an alias.
+ *  @name: name of alias
+ *  @value: value of alias
+ *	Return: noting
+ */
 void define_alias(char *name, char *value)
 {
     char *cmd = NULL;

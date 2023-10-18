@@ -1,6 +1,13 @@
 #include "main.h"
 
 
+/**
+ *	handle_alias - handle alias functions
+ *  @args: input tokenized arguments
+ *  @buffer: input buffer from getline
+ * 	@prog: shell program name
+ *	Return: execution status
+ */
 int handle_alias(char **args, char *buffer, char *prog)
 {
     int i = 1, exe = 0;
@@ -9,7 +16,7 @@ int handle_alias(char **args, char *buffer, char *prog)
     NOTUSED(prog);
     NOTUSED(buffer);
     if (strcmp(args[0], "alias") == 0 && args[1] == NULL)
-	{
+    {
         print_all_aliases();
         exe = 1;
         free(args);
@@ -20,11 +27,11 @@ int handle_alias(char **args, char *buffer, char *prog)
         {
             if (flag_delim(args[i], '=') == 1)
             {
-            name = get_alias_name(args[i]);
-            value = get_alias_value(args[i]);
-            define_alias(name, value);
-            free(name);
-            free(value);
+                name = get_alias_name(args[i]);
+                value = get_alias_value(args[i]);
+                define_alias(name, value);
+                free(name);
+                free(value);
             }
             else
             {
@@ -34,7 +41,6 @@ int handle_alias(char **args, char *buffer, char *prog)
         }
         exe = 1;
         free(args);
-
     }
     else if (strcmp(args[0], "unalias") == 0)
     {
@@ -50,6 +56,12 @@ int handle_alias(char **args, char *buffer, char *prog)
     return (exe);
 }
 
+/**
+ *	get_alias_name - retreve alias name
+ *  @str: array to get alias name from
+ *
+ *	Return: alias name
+ */
 char *get_alias_name(char *str)
 {
     char *name = NULL;
@@ -74,6 +86,13 @@ char *get_alias_name(char *str)
     return (name);
 }
 
+
+/**
+ *	get_alias_value - retreve alias value
+ *  @str: array to get alias value from
+ *
+ *	Return: alias value
+ */
 char *get_alias_value(char *str)
 {
     char *value = NULL;
@@ -85,7 +104,6 @@ char *get_alias_value(char *str)
         return (NULL);
     if (sign != NULL)
     {
-
         for (i = 0; sign[i] != '\0'; i++)
         {
             if (sign[i] == '\'' && sign[i + 1] == '\0')
@@ -95,11 +113,8 @@ char *get_alias_value(char *str)
                 break;
             }
             else
-            {
                 len = strlen(sign + 1);
-            }
         }
-
         value = malloc(len + 1);
         if (value == NULL)
         {
@@ -107,13 +122,9 @@ char *get_alias_value(char *str)
             return (NULL);
         }
         if (sign[1] == '\'')
-        {
             strcpy(value, sign + 2);
-        }
         else
-        {
             strcpy(value, sign + 1);
-        }
     }
     return (value);
 }

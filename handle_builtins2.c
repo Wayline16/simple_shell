@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ *	handle_builtins2 - handle builtin functions
+ *  @args: input tokenized arguments
+ *  @buffer: input buffer from getline
+ * 	@prog: shell program name
+ *	Return: execution status
+ */
 int handle_builtins2(char **args, char *buffer, char *prog)
 {
 	int overwrite, exe = 0;
@@ -53,6 +60,12 @@ int handle_builtins2(char **args, char *buffer, char *prog)
     return (exe);
 }
 
+
+/**
+ *	handle_echo_status - handle echo status
+ *
+ *	Return: nothing
+ */
 void handle_echo_status(void)
 {
     char *errnum;
@@ -61,6 +74,11 @@ void handle_echo_status(void)
     free(errnum);
 }
 
+/**
+ *	handle_echo_status - handle echo status
+ *
+ *	Return: nothing
+ */
 void handle_echo_pid(void)
 {
     char *pid_str;
@@ -72,53 +90,59 @@ void handle_echo_pid(void)
     free(pid_str);
 }
 
+/**
+ *	handle_echo_args - handle echo arguments
+ *  @args: input tokenized arguments
+ *
+ *	Return: nothing
+ */
 void handle_echo_args(char **args)
- {
+{
     int i = 1;
     char *args_ptr, *path_buf;
 
     while (args[i] != NULL)
+    {
+        args_ptr = args[i];
+        if (strcmp(args_ptr, "$$") == 0)
+        {
+            handle_echo_pid();
+            if (args[i + 1] != NULL)
+                write(1, " ", 1);
+            else
+                write(1, "\n", 2);
+        }
+        else if ((strcmp(args_ptr, "$?") == 0))
+        {
+            handle_echo_status();
+            if (args[i + 1] != NULL)
+                write(1, " ", 1);
+            else
+                write(1, "\n", 2);
+        }
+        else if (*args_ptr == '$' && (strcmp(args_ptr + 1, "PATH") == 0 || strcmp(args_ptr + 1, "path") == 0))
+        {
+            path_buf = extract_path();
+            write(1, path_buf, strlen(path_buf));
+            free(path_buf);
+            if (args[i + 1] != NULL)
+                write(1, " ", 1);
+            else
+                write(1, "\n", 2);
+        }
+        else
+        {
+            while (*args_ptr != '\0')
             {
-                args_ptr = args[i];
-                if (strcmp(args_ptr, "$$") == 0)
-                {
-                    handle_echo_pid();
-                    if (args[i + 1] != NULL)
-                        write(1, " ", 1);
-                    else
-                        write(1, "\n", 2);
-                }
-                else if ((strcmp(args_ptr, "$?") == 0))
-                {
-                    handle_echo_status();
-                    if (args[i + 1] != NULL)
-                        write(1, " ", 1);
-                    else
-                        write(1, "\n", 2);
-                }
-                else if (*args_ptr == '$' && (strcmp(args_ptr + 1, "PATH") == 0 || strcmp(args_ptr + 1, "path") == 0))
-                {
-                    path_buf = extract_path();
-                    write(1, path_buf, strlen(path_buf));
-                    free(path_buf);
-                    if (args[i + 1] != NULL)
-                        write(1, " ", 1);
-                    else
-                        write(1, "\n", 2);
-                }
-                else
-                {
-                    while (*args_ptr != '\0')
-                    {
-                        if (*args_ptr != '\\')
-                            write(1, args_ptr, 1);
-                        args_ptr++;
-                    }
-                    if (args[i + 1] != NULL)
-                        write(1, " ", 1);
-                    else
-                        write(1, "\n", 2);
-                }
-                i++;
+                if (*args_ptr != '\\')
+                    write(1, args_ptr, 1);
+                args_ptr++;
             }
- }
+            if (args[i + 1] != NULL)
+                write(1, " ", 1);
+            else
+                write(1, "\n", 2);
+        }
+        i++;
+    }
+}

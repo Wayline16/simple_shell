@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * fix_comments - Checks if the string is a comment
+ * handle_comments - Checks if the string is a comment
  * @buffer: The string to check and fix a null byte at point of #
  * Return: Void
  */

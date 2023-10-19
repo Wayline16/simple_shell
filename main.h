@@ -47,7 +47,7 @@ int handle_builtins2(char **args, char *buffer, char *prog);
 int handle_builtins_echo(char **args, char *buffer, char *prog);
 int _cd(char **args, char *prog);
 int _cd_HOME(void);
-int _setenv(const char *name, const char *value, int overwrite);
+int _setenv(const char *name, const char *value);
 int _unsetenv(const char *name);
 void handle_echo_status(void);
 void handle_echo_pid(void);

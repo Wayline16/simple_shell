@@ -9,17 +9,13 @@
  */
 int handle_builtins2(char **args, char *buffer, char *prog)
 {
-	int overwrite, exe = 0;
+	int exe = 0;
 
 	NOTUSED(prog);
 	NOTUSED(buffer);
 	if (strcmp(args[0], "setenv") == 0)
 	{
-		if (args[3] != NULL)
-			overwrite = atoi(args[3]);
-		else
-			overwrite = 0;
-		_setenv(args[1], args[2], overwrite);
+		_setenv(args[1], args[2]);
 		exe = 1;
 		free(args);
 	}
@@ -137,14 +133,19 @@ void handle_echo_args(char **args)
 		}
 		else if (*args_ptr == '$')
 		{
-            if ((path_buf = getenv(args_ptr + 1)) != NULL)
+            path_buf = getenv(args_ptr + 1);
+            if (path_buf != NULL)
             {
-			write(1, path_buf, strlen(path_buf));
-            }
-            if (args[i + 1] != NULL)
+            if (strcmp(args[i - 1], "echo") != 0)
 				write(1, " ", 1);
-			else
-				write(1, "\n", 2);
+			write(1, path_buf, strlen(path_buf));
+            if (args[i + 1] == NULL)
+            {
+                write(1, "\n", 2);
+            }
+            else
+                write(1, " ", 1);
+            }
 		}
 		else
 		{
@@ -154,10 +155,10 @@ void handle_echo_args(char **args)
 					write(1, args_ptr, 1);
 				args_ptr++;
 			}
-			if (args[i + 1] != NULL)
-				write(1, " ", 1);
-			else
+			if (args[i + 1] == NULL)
 				write(1, "\n", 2);
+
+
 		}
 		i++;
 	}

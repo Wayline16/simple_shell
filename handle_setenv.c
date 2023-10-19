@@ -7,7 +7,7 @@
  * @overwrite: to overwrite value if exist
  * Return: execution status
  */
-int _setenv(const char *name, const char *value, int overwrite)
+int _setenv(const char *name, const char *value)
 {
 	char *es;
 	int i;
@@ -25,7 +25,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 			break;
 		}
 	}
-	if (overwrite || es == NULL)
+	if (es == NULL)
 	{
 		es = malloc(strlen(name) + strlen(value) + 2);
 		if (es == NULL)
@@ -37,6 +37,8 @@ int _setenv(const char *name, const char *value, int overwrite)
 		strcat(es, value);
 		environ[i] = es;
 		environ[i + 1] = NULL;
+		free(es);
 	}
+
 	return (0);
 }

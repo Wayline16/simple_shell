@@ -15,7 +15,6 @@ int _setenv(const char *name, const char *value, int overwrite)
 	if (name == NULL || name[0] == '\0' || strchr(name, '=') != NULL ||
 			value == NULL)
 	{
-		errno = EINVAL;
 		return (-1);
 	}
 	es = getenv(name);
@@ -31,7 +30,6 @@ int _setenv(const char *name, const char *value, int overwrite)
 		es = malloc(strlen(name) + strlen(value) + 2);
 		if (es == NULL)
 		{
-			errno = ENOMEM;
 			return (-1);
 		}
 		strcpy(es, name);

@@ -13,7 +13,6 @@ int _unsetenv(const char *name)
 
 	if (name == NULL || name[0] == '\0' || strchr(name, '=') != NULL)
 	{
-		errno = EINVAL;
 		return (-1);
 	}
 	len = strlen(name);

@@ -144,7 +144,7 @@ int _cd(char **args, char *prog)
 		if (chdir_stat < 0)
 		{
 			errmsg = ": can't cd to";
-			error_msg(prog_count, "cd", prog, errmsg, args[1], 1);
+			error_msg(prog_count, "cd", prog, errmsg, args[1], 2);
 		}
 	}
 	flag = 1;
@@ -164,7 +164,7 @@ int _cd_HOME(void)
 	getcwd(bef_hom_dir, sizeof(bef_hom_dir));
 	home_dir = getenv("HOME");
 	if (home_dir == NULL)
-		return (0);
+		return (-1);
 	chdir(home_dir);
 	setenv("PWD", home_dir, 1);
 	setenv("OLDPWD", bef_hom_dir, 1);

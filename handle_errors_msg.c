@@ -22,10 +22,20 @@ void error_msg(int prog_cnt, char *cmd,
 	write(2, ": ", 2);
 	write(2, cmd, strlen(cmd));
 	write(2, msg, strlen(msg));
-	if (mode == 1)
-	{
-		write(2, ": ", 2);
-		write(2, arg, strlen(arg));
-	}
-	write(2, "\n", 1);
+    switch (mode)
+    {
+    case (1):
+    {
+        write(2, ": ", 2);
+        write(2, arg, strlen(arg));
+        break;
+    }
+    case (2):
+    {
+        write(2, " ", 1);
+        write(2, arg, strlen(arg));
+        break;
+    }
+    }
+    write(2, "\n", 1);
 }

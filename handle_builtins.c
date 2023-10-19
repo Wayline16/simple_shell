@@ -44,7 +44,7 @@ int handle_builtins(char **args, char *buffer, char *prog)
 	}
 	else if (strcmp(args[0], "cd") == 0)
 	{
-		exe = _cd(args);
+		exe = _cd(args, prog);
 		free(args);
 	}
 
@@ -104,11 +104,11 @@ int exit_status(char *arg, char *prog)
  *
  * Return: exe status.
  */
-int _cd(char **args)
+int _cd(char **args, char *prog)
 {
 	char cur_dir[1024];
-	char *old_pwd;
-	int i, j, flag;
+	char *old_pwd, *errmsg;
+	int i, j, flag, chdir_stat;
 
 	i = j = flag = 0;
 
@@ -139,8 +139,13 @@ int _cd(char **args)
 	}
 	else
 	{
-		chdir(args[1]);
+		chdir_stat = chdir(args[1]);
 		setenv("OLDPWD", cur_dir, 1);
+		if (chdir_stat < 0)
+		{
+			errmsg = ": can't cd to";
+			error_msg(prog_count, "cd", prog, errmsg, args[1], 1);
+		}
 	}
 	flag = 1;
 	return (1);

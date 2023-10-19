@@ -135,13 +135,13 @@ void handle_echo_args(char **args)
 			else
 				write(1, "\n", 2);
 		}
-		else if (*args_ptr == '$' && (strcmp(args_ptr + 1, "PATH") == 0
-					|| strcmp(args_ptr + 1, "path") == 0))
+		else if (*args_ptr == '$')
 		{
-			path_buf = extract_path();
+            if ((path_buf = getenv(args_ptr + 1)) != NULL)
+            {
 			write(1, path_buf, strlen(path_buf));
-			free(path_buf);
-			if (args[i + 1] != NULL)
+            }
+            if (args[i + 1] != NULL)
 				write(1, " ", 1);
 			else
 				write(1, "\n", 2);

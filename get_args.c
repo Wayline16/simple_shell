@@ -22,7 +22,10 @@ char **get_args(char *line)
 		return (NULL);
 	tokens = custom_strtok(line, delim);
 	if (tokens == NULL)
+	{
+		free(args);
 		return (NULL);
+	}
 	while (tokens != NULL)
 	{
 		args[i++] = tokens;

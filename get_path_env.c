@@ -7,15 +7,21 @@
  */
 char *extract_path(void)
 {
-	int index = 0, length = 0;
-	int i, j;
+	int index = 0, path_len = 0, length = 0;
+	int i, j, k = 0;
 	char *buffer;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (strncmp(environ[i], "PATH=", 5) == 0)
+		if (strncmp(environ[i], "PATH", 4) == 0)
 		{
-			length += strlen(environ[i]) - 5;
+            while (environ[i][k] != '=')
+            {
+                path_len++;
+                k++;
+            }
+
+			length += strlen(environ[i]) - (path_len + 1);
 		}
 	}
 	buffer = malloc(length + 1);
@@ -24,12 +30,20 @@ char *extract_path(void)
 		return (NULL);
 	}
 	index = 0;
+    k = 0;
+    path_len = 0;
 	for (j = 0; environ[j] != NULL; j++)
 	{
-		if (strncmp(environ[j], "PATH=", 5) == 0)
+		if (strncmp(environ[j], "PATH", 4) == 0)
 		{
-			strcpy(buffer + index, environ[j] + 5);
-			index += strlen(environ[j]) - 5;
+            while (environ[j][k] != '=')
+            {
+                path_len++;
+                k++;
+            }
+
+			strcpy(buffer + index, environ[j] + (path_len + 1));
+			index += strlen(environ[j]) - (path_len + 1);
 		}
 	}
 

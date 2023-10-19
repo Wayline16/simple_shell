@@ -11,7 +11,7 @@
 char **get_args(char *line)
 {
 	char *tokens = NULL;
-	char *delim = " \n";
+	char *delim = "\\ \n";
 	char **args = NULL;
 	int i = 0;
 	int size_tokens;

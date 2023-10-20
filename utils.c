@@ -36,14 +36,14 @@ int _count_tokens(char *str, char *delim)
  * Return: Void
  */
 
-void free_array(char **argv)
+void free_array(char **argv, int size)
 {
     int i = 0;
 
     if (argv == NULL)
         return;
 
-    while (argv[i] != NULL)
+    while (i < size)
     {
         free(argv[i]);
         i++;

@@ -16,14 +16,17 @@ int main(int ac, char **av)
     char *errmsg, *readbuff = NULL, *fullcmd = NULL;
     int shell_mode = isatty(0);
 
-    NOTUSED(ac);
     errno = 0;
     prog_count = 0;
 
     while (1)
     {
         prog_count++;
-        if (shell_mode == 1)
+        if (shell_mode == 0 || ac > 1)
+        {
+            handle_file_test(ac, av);
+        }
+        else if (shell_mode == 1)
         {
             write(1, prompt, 4);
             fflush(stdout);
@@ -52,7 +55,6 @@ int main(int ac, char **av)
         }
         else
         {
-
             fullcmd = get_full_path(args[0]);
             if (fullcmd == NULL)
             {

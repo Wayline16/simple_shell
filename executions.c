@@ -77,3 +77,68 @@ int exec_full_path_cmd(char **args, char **argv, char *fullcmd)
 	}
 	return (status);
 }
+
+
+int multi_exec_full_path(char **args, char **argv)
+{
+	pid_t pid_num;
+	int status;
+
+	pid_num = fork();
+	if (pid_num < 0)
+	{
+		perror(argv[0]);
+		exit(-1);
+	}
+	else if (pid_num == 0)
+	{
+		execve(args[0], args, environ);
+		perror(argv[0]);
+		exit(2);
+	}
+	else
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+		{
+			status = WEXITSTATUS(status);
+		}
+		errno = status;
+
+	}
+
+	return (status);
+}
+
+
+int multi_exec_fullcmd(char **args, char **argv, char *fullcmd)
+{
+	pid_t pid_num;
+	int status;
+
+	pid_num = fork();
+	if (pid_num < 0)
+	{
+		perror(argv[0]);
+		exit(-1);
+	}
+	else if (pid_num == 0)
+	{
+		execve(fullcmd, args, environ);
+		perror(argv[0]);
+		exit(2);
+	}
+	else
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+		{
+			status = WEXITSTATUS(status);
+		}
+		errno = status;
+		free(fullcmd);
+		
+		return (status);
+	}
+	return (status);
+}

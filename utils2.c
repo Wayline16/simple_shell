@@ -60,3 +60,79 @@ int flag_delim(char *str, char delim)
 
     return (flag);
 }
+
+int _count_2dtokens(char **str, char *delim)
+{
+    int len = 0, count = 0, str_cnt = 0, i;
+    char *token = NULL;
+    char **token_cnt_cpy = NULL;
+
+    if (str == NULL)
+        return (count);
+    while (str != NULL)
+    {
+        str_cnt++;
+    }
+    token_cnt_cpy = strdup2d(str);
+    for (i = 0; i < str_cnt; i++)
+    {
+        token = strtok(token_cnt_cpy[i], delim);
+        while (token)
+    {
+        count++;
+        len += strlen(token);
+        token = strtok(NULL, delim);
+    }
+    len++;
+    }
+    free(token_cnt_cpy);
+    return (count + len);
+}
+
+
+
+char **strdup2d(char **str)
+{
+  int i, j;
+  int num_strings = 0;
+  char **new_str;
+
+  while (str[num_strings] != NULL) {
+    num_strings++;
+  }
+
+  new_str = malloc(sizeof(char *) * (num_strings + 1));
+  if (new_str == NULL) {
+    return NULL;
+  }
+
+
+  for (i = 0; i < num_strings; i++) {
+    new_str[i] = strdup(str[i]);
+    if (new_str[i] == NULL) {
+      for (j = 0; j < i; j++) {
+        free(new_str[j]);
+      }
+      free(new_str);
+      return NULL;
+    }
+  }
+
+  new_str[num_strings] = NULL;
+
+  return new_str;
+}
+
+void free_3darray(char ***argslist)
+{
+    int i, j;
+    for (i = 0; argslist[i] != NULL; i++)
+    {
+        for (j = 0; argslist[i][j] != NULL; j++)
+        {
+            free(argslist[i][j]);
+        }
+        free(argslist[i]);
+    }
+    free(argslist);
+}

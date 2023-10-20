@@ -54,6 +54,10 @@ void handle_echo_pid(void);
 void handle_echo_args(char **args);
 int exit_status(char *arg, char *prog);
 void handle_variables(char **args);
+void handle_file_test(int prgm_cnt, char **prog);
+int handle_file(char **args, char *prog);
+char ***get_filetok(char **line);
+ void exe_files(char ***arglist, char **argv);
 
 /*command path handlers*/
 char *extract_path(void);
@@ -61,12 +65,17 @@ int exec_full_path(char **args, char **argv);
 char *get_full_path(char *cmd);
 int exec_full_path_cmd(char **args, char **argv, char *fullcmd);
 int is_valid_full_path(char **args);
+int multi_exec_fullcmd(char **args, char **argv, char *fullcmd);
+int multi_exec_full_path(char **args, char **argv);
 /*string support handlers*/
-void free_array(char **argv);
+void free_array(char **argv, int size);
 char *int_to_string(int num);
 int is_digit_string(char *s);
 int flag_arraydelim(char **str, char delim);
 int flag_delim(char *str, char delim);
+char **strdup2d(char **str);
+int _count_2dtokens(char **str, char *delim);
+void free_3darray(char ***argslist);
 /*error msg handlers*/
 void error_msg(int prog_cnt, char *cmd,
 char *prog, char *msg, char *arg, int mode);
@@ -76,6 +85,5 @@ size_t custom_getline(char **lineptr, size_t *n, FILE *stream);
 int _count_tokens(char *str, char *delim);
 int _size_tokens(char *str, char *delim);
 char **get_args(char *line);
-char **handle_op(char **args);
 char *custom_strtok(char *str, const char *delimiters);
 #endif

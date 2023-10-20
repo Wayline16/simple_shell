@@ -20,7 +20,8 @@ void error_msg(int prog_cnt, char *cmd,
 	write(2, ": ", 2);
 	write(2, &prg_cnt, strlen(&prg_cnt));
 	write(2, ": ", 2);
-	write(2, cmd, strlen(cmd));
+    if (cmd != NULL)
+	    write(2, cmd, strlen(cmd));
 	write(2, msg, strlen(msg));
     switch (mode)
     {

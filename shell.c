@@ -15,6 +15,8 @@ int main(int ac, char **av)
     ssize_t read_cnt = 0;
     char *errmsg, *readbuff = NULL, *fullcmd = NULL;
     int shell_mode = isatty(0);
+    char *line_cpy;
+
 
     errno = 0;
     prog_count = 0;
@@ -36,19 +38,26 @@ int main(int ac, char **av)
         {
             free(readbuff);
             free_aliases();
+            free(line_cpy);
             exit(errno);
         }
         handle_comments(readbuff);
-        args = get_args(readbuff);
+        line_cpy = strdup(readbuff);
+        args = get_args(readbuff, "\\ \n");
         if (args == NULL)
         {
             continue;
         }
         handle_variables(args);
         check_alias(args);
-        if (handle_builtins(args, readbuff, av[0]) || handle_builtins2(args, readbuff, av[0])
-        || handle_builtins_echo(args, readbuff, av[0]) || handle_alias(args, readbuff, av[0]))
+        if (handle_builtins(args, readbuff, av[0], line_cpy) == 1 || handle_builtins2(args, readbuff, av[0]) == 1
+        || handle_builtins_echo(args, readbuff, av[0]) == 1 || handle_alias(args, readbuff, av[0]) == 1)
             continue;
+        if(exe_semitok(line_cpy, args[0], av) == 1)
+        {
+            free(args);
+            continue;
+        }
         if (is_valid_full_path(args) == 1)
         {
             exec_full_path(args, av);

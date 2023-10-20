@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 #define more_lines 1024
 
 #define more_chars 1024
@@ -15,7 +14,7 @@ void handle_file_test(int prgm_cnt, char **prog)
     size_t i, new_size, total_lines = 0, total_chars = 0, j;
     char c;
 
-    errno = 0;
+
     if (prgm_cnt > 1)
     {
         fd = fopen(prog[1], "r");
@@ -92,79 +91,76 @@ void handle_file_test(int prgm_cnt, char **prog)
             }
         }
         line_tok[j] = NULL;
-        line_3dtok = get_filetok(line_tok);
+        line_3dtok = get_filetok(line_tok, " ");
         free(line_tok);
         free_array(lines, total_lines);
         exe_files(line_3dtok, prog);
         free_3darray(line_3dtok);
-        exit(errno);
+        exit(0);
     }
 }
 
-    char ***get_filetok(char **line)
+char ***get_filetok(char **line, char *delim)
+{
+    char ***args_3darray;
+    int num_rows = 0, i, k, num_colm = 4;
+    char *tok;
+
+    while (line[num_rows] != NULL)
     {
-        char ***args_3darray;
-        int num_rows = 0, i, j, k, m, num_colm = 4;
-        char *tok;
+        num_rows++;
+    }
+    args_3darray = malloc((num_rows + 1) * sizeof(char **));
+    for (i = 0; i < num_rows; i++)
+    {
+        args_3darray[i] = malloc(num_colm * sizeof(char *));
+    }
 
-        NOTUSED(m);
-        NOTUSED(j);
-        while (line[num_rows] != NULL)
-        {
-            num_rows++;
-        }
-        args_3darray = malloc((num_rows + 1)  * sizeof(char **));
-        for (i = 0; i < num_rows; i++)
-        {
-            args_3darray[i] = malloc(num_colm * sizeof(char *));
-        }
-
+    k = 0;
+    for (i = 0; i < num_rows; i++)
+    {
+        tok = strtok(line[i], delim);
         k = 0;
-        for (i = 0; i < num_rows; i++)
+        while (tok != NULL)
         {
-            tok = strtok(line[i], " ");
-            k = 0;
-            while (tok != NULL)
-            {
-                args_3darray[i][k] = malloc(strlen(tok) + 1);
-                strcpy(args_3darray[i][k], tok);
-                k++;
+            args_3darray[i][k] = malloc(strlen(tok) + 1);
+            strcpy(args_3darray[i][k], tok);
+            k++;
 
-                tok = strtok(NULL, " ");
-            }
-            args_3darray[i][k] = NULL;
+            tok = strtok(NULL, delim);
         }
-        args_3darray[i] = NULL;
-
-        return (args_3darray);
+        args_3darray[i][k] = NULL;
     }
+    args_3darray[i] = NULL;
 
-    void exe_files(char ***arglist, char **argv)
+    return (args_3darray);
+}
+
+void exe_files(char ***arglist, char **argv)
+{
+    int x, y;
+    char *fullcmd, *errmsg;
+
+    NOTUSED(y);
+    for (x = 0; arglist[x] != NULL; x++)
     {
-        int x, y;
-        char *fullcmd, *errmsg;
-
-        NOTUSED(y);
-        for (x = 0; arglist[x] != NULL; x++)
+        if (is_valid_full_path(arglist[x]) == 1)
         {
-            if (is_valid_full_path(arglist[x]) == 1)
-            {
-                multi_exec_full_path(arglist[x], argv);
-            }
-            else
-            {
-
-                fullcmd = get_full_path(arglist[x][0]);
-                if (fullcmd == NULL)
-                {
-                    errmsg = ": not found";
-                    error_msg(0, arglist[x][0], argv[0], errmsg, arglist[x][0], 0);
-                    free_3darray(arglist);
-                    errno = 127;
-                    exit(127);
-                }
-                multi_exec_fullcmd(arglist[x], argv, fullcmd);
-            }
+            multi_exec_full_path(arglist[x], argv);
         }
+        else
+        {
 
+            fullcmd = get_full_path(arglist[x][0]);
+            if (fullcmd == NULL)
+            {
+                errmsg = ": not found";
+                error_msg(0, arglist[x][0], argv[0], errmsg, arglist[x][0], 0);
+                free_3darray(arglist);
+                errno = 127;
+                exit(127);
+            }
+            multi_exec_fullcmd(arglist[x], argv, fullcmd);
+        }
     }
+}

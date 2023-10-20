@@ -42,7 +42,7 @@ char *get_alias_value(char *str);
 char **check_alias(char **args);
 void free_aliases(void);
 /*builtin command handlers*/
-int handle_builtins(char **args, char *buffer, char *prog);
+int handle_builtins(char **args, char *buffer, char *prog, char *buf_cpy);
 int handle_builtins2(char **args, char *buffer, char *prog);
 int handle_builtins_echo(char **args, char *buffer, char *prog);
 int _cd(char **args, char *prog);
@@ -56,7 +56,7 @@ int exit_status(char *arg, char *prog);
 void handle_variables(char **args);
 void handle_file_test(int prgm_cnt, char **prog);
 int handle_file(char **args, char *prog);
-char ***get_filetok(char **line);
+char ***get_filetok(char **line, char *delim);
  void exe_files(char ***arglist, char **argv);
 
 /*command path handlers*/
@@ -76,6 +76,7 @@ int flag_delim(char *str, char delim);
 char **strdup2d(char **str);
 int _count_2dtokens(char **str, char *delim);
 void free_3darray(char ***argslist);
+int exe_semitok(char *line, char *prog, char **argv);
 /*error msg handlers*/
 void error_msg(int prog_cnt, char *cmd,
 char *prog, char *msg, char *arg, int mode);
@@ -84,6 +85,6 @@ void handle_comments(char *buffer);
 size_t custom_getline(char **lineptr, size_t *n, FILE *stream);
 int _count_tokens(char *str, char *delim);
 int _size_tokens(char *str, char *delim);
-char **get_args(char *line);
+char **get_args(char *line, char *delim);
 char *custom_strtok(char *str, const char *delimiters);
 #endif

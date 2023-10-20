@@ -33,6 +33,7 @@ int exec_full_path(char **args, char **argv)
 		}
 		errno = status;
 		free(args);
+		return(status);
 	}
 
 	return (status);

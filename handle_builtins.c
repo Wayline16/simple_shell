@@ -7,7 +7,7 @@
  * @prog: shell program name
  * Return: execution status
  */
-int handle_builtins(char **args, char *buffer, char *prog)
+int handle_builtins(char **args, char *buffer, char *prog, char *buf_cpy)
 {
 	int exe = 0, i = 0;
 
@@ -19,6 +19,7 @@ int handle_builtins(char **args, char *buffer, char *prog)
 			errno = exit_status(args[1], prog);
 			free(args);
 			free(buffer);
+			free(buf_cpy);
 			free_aliases();
 			exit(errno);
 		}
@@ -26,6 +27,7 @@ int handle_builtins(char **args, char *buffer, char *prog)
 		{
 			free(args);
 			free(buffer);
+			free(buf_cpy);
 			free_aliases();
 			exit(errno);
 		}

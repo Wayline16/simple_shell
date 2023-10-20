@@ -1,3 +1,4 @@
-echo fuck
+echo boom
 ls
-pw
+pwd
+/bin/date

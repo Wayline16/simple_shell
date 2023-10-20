@@ -53,6 +53,7 @@ void handle_echo_status(void);
 void handle_echo_pid(void);
 void handle_echo_args(char **args);
 int exit_status(char *arg, char *prog);
+void handle_variables(char **args);
 
 /*command path handlers*/
 char *extract_path(void);

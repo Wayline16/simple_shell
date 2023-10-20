@@ -110,7 +110,7 @@ void handle_echo_pid(void)
 void handle_echo_args(char **args)
 {
 	int i = 1;
-	char *args_ptr, *path_buf;
+	char *args_ptr;
 
 	while (args[i] != NULL)
 	{
@@ -118,48 +118,59 @@ void handle_echo_args(char **args)
 		if (strcmp(args_ptr, "$$") == 0)
 		{
 			handle_echo_pid();
-			if (args[i + 1] != NULL)
-				write(1, " ", 1);
+			if (args[i + 1] == NULL)
+				write(1, "\n", 2);
 			else
 				write(1, "\n", 2);
 		}
 		else if ((strcmp(args_ptr, "$?") == 0))
 		{
 			handle_echo_status();
-			if (args[i + 1] != NULL)
-				write(1, " ", 1);
-			else
+			if (args[i + 1] == NULL)
 				write(1, "\n", 2);
-		}
-		else if (*args_ptr == '$')
-		{
-            path_buf = getenv(args_ptr + 1);
-            if (path_buf != NULL)
-            {
-            if (strcmp(args[i - 1], "echo") != 0)
-				write(1, " ", 1);
-			write(1, path_buf, strlen(path_buf));
-            if (args[i + 1] == NULL)
-            {
-                write(1, "\n", 2);
-            }
-            else
-                write(1, " ", 1);
-            }
 		}
 		else
 		{
 			while (*args_ptr != '\0')
 			{
-				if (*args_ptr != '\\')
-					write(1, args_ptr, 1);
+				write(1, args_ptr, 1);
 				args_ptr++;
 			}
-			if (args[i + 1] == NULL)
+			if (args[i + 1] != NULL)
+				write(1, " ", 1);
+			else
 				write(1, "\n", 2);
-
 
 		}
 		i++;
 	}
+}
+
+void handle_variables(char **args)
+{
+    int i = 0;
+
+    while (args[i] != NULL)
+    {
+
+        if (strcmp(args[i], "$$") != 0 && strcmp(args[i], "$?") != 0 && strcmp(args[i], "$") != 0)
+        {
+
+            if (args[i][0] == '$')
+            {
+
+                char *var_name = args[i] + 1;
+
+                char *var_value = getenv(var_name);
+
+                if (var_value == NULL)
+                {
+                    var_value = "";
+                }
+
+                strcpy(args[i], var_value);
+            }
+        }
+        i++;
+    }
 }

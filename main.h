@@ -77,6 +77,7 @@ char **strdup2d(char **str);
 int _count_2dtokens(char **str, char *delim);
 void free_3darray(char ***argslist);
 int exe_semitok(char *line, char *prog, char **argv);
+void exe_semiop(char ***arglist, char **argv);
 /*error msg handlers*/
 void error_msg(int prog_cnt, char *cmd,
 char *prog, char *msg, char *arg, int mode);

@@ -7,7 +7,8 @@
  * @prog: shell program name
  * Return: execution status
  */
-int handle_builtins(char **args, char *buffer, char *prog, char *buf_cpy)
+int handle_builtins(char **args, char *buffer,
+			char *prog, char *buf_cpy, char *buf_cpy2, char *buf_cpy3)
 {
 	int exe = 0, i = 0;
 
@@ -20,6 +21,8 @@ int handle_builtins(char **args, char *buffer, char *prog, char *buf_cpy)
 			free(args);
 			free(buffer);
 			free(buf_cpy);
+			free(buf_cpy2);
+			free(buf_cpy3);
 			free_aliases();
 			exit(errno);
 		}
@@ -28,6 +31,8 @@ int handle_builtins(char **args, char *buffer, char *prog, char *buf_cpy)
 			free(args);
 			free(buffer);
 			free(buf_cpy);
+			free(buf_cpy2);
+			free(buf_cpy3);
 			free_aliases();
 			exit(errno);
 		}

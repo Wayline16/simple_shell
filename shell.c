@@ -15,7 +15,7 @@ int main(int ac, char **av)
     ssize_t read_cnt = 0;
     char *errmsg, *readbuff = NULL, *fullcmd = NULL;
     int shell_mode = isatty(0);
-    char *line_cpy = NULL;
+    char *line_cpy = NULL, *line_cpy2 = NULL, *line_cpy3 = NULL;
 
 
     errno = 0;
@@ -42,26 +42,39 @@ int main(int ac, char **av)
         }
         handle_comments(readbuff);
         line_cpy = strdup(readbuff);
+        line_cpy2 = strdup(readbuff);
+        line_cpy3 = strdup(readbuff);
         args = get_args(readbuff, "\\ \n");
         if (args == NULL)
         {
             free(line_cpy);
+            free(line_cpy2);
+            free(line_cpy3);
             continue;
         }
         handle_variables(args);
         check_alias(args);
-        if (handle_builtins(args, readbuff, av[0], line_cpy) == 1 || handle_builtins2(args, readbuff, av[0]) == 1
+        if (handle_builtins(args, readbuff, av[0], line_cpy, line_cpy2, line_cpy3) == 1
+        || handle_builtins2(args, readbuff, av[0]) == 1
         || handle_builtins_echo(args, readbuff, av[0]) == 1 || handle_alias(args, readbuff, av[0]) == 1)
         {
             free(line_cpy);
+            free(line_cpy2);
+            free(line_cpy3);
             continue;
         }
-        if(exe_semitok(line_cpy, args[0], av) == 1)
+        if(exe_semitok(line_cpy, args[0], av) == 1 || exe_ANDtok(line_cpy2, args[0], av) == 1
+        || exe_ORtok(line_cpy3, args[0], av) == 1)
         {
+            free(line_cpy);
+            free(line_cpy2);
+            free(line_cpy3);
             free(args);
             continue;
         }
         free(line_cpy);
+        free(line_cpy2);
+        free(line_cpy3);
         if (is_valid_full_path(args) == 1)
         {
             exec_full_path(args, av);

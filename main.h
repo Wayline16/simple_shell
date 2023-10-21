@@ -42,7 +42,8 @@ char *get_alias_value(char *str);
 char **check_alias(char **args);
 void free_aliases(void);
 /*builtin command handlers*/
-int handle_builtins(char **args, char *buffer, char *prog, char *buf_cpy);
+int handle_builtins(char **args, char *buffer, char *prog,
+    char *buf_cpy, char *buf_cpy2, char *buf_cpy3);
 int handle_builtins2(char **args, char *buffer, char *prog);
 int handle_builtins_echo(char **args, char *buffer, char *prog);
 int _cd(char **args, char *prog);
@@ -78,6 +79,10 @@ int _count_2dtokens(char **str, char *delim);
 void free_3darray(char ***argslist);
 int exe_semitok(char *line, char *prog, char **argv);
 void exe_semiop(char ***arglist, char **argv);
+int exe_ANDtok(char *line, char *prog, char **argv);
+void exe_ANDop(char ***arglist, char **argv);
+int exe_ORtok(char *line, char *prog, char **argv);
+void exe_ORop(char ***arglist, char **argv);
 /*error msg handlers*/
 void error_msg(int prog_cnt, char *cmd,
 char *prog, char *msg, char *arg, int mode);

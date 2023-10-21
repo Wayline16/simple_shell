@@ -38,7 +38,6 @@ int main(int ac, char **av)
         {
             free(readbuff);
             free_aliases();
-            free(line_cpy);
             exit(errno);
         }
         handle_comments(readbuff);

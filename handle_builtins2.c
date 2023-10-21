@@ -17,12 +17,13 @@ int handle_builtins2(char **args, char *buffer, char *prog)
 	{
 		_setenv(args[1], args[2]);
 		exe = 1;
+		free(args);
 	}
 	else if (strcmp(args[0], "unsetenv") == 0)
 	{
 		_unsetenv(args[1]);
-		free(args);
 		exe = 1;
+		free(args);
 	}
 
 	return (exe);

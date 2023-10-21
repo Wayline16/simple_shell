@@ -54,12 +54,13 @@ int handle_builtins_echo(char **args, char *buffer, char *prog)
 		if (strcmp(args[1], "$?") == 0 && args[2] == NULL)
 		{
 			handle_echo_status();
-			write(1, "\n", 2);
+			write(1, "\n", 1);
+			errno = 0;
 		}
 		else if (strcmp(args[1], "$$") == 0 && args[2] == NULL)
 		{
 			handle_echo_pid();
-			write(1, "\n", 2);
+			write(1, "\n", 1);
 		}
 		else
 		{
@@ -119,15 +120,15 @@ void handle_echo_args(char **args)
 		{
 			handle_echo_pid();
 			if (args[i + 1] == NULL)
-				write(1, "\n", 2);
+				write(1, "\n", 1);
 			else
-				write(1, "\n", 2);
+				write(1, "\n", 1);
 		}
 		else if ((strcmp(args_ptr, "$?") == 0))
 		{
 			handle_echo_status();
 			if (args[i + 1] == NULL)
-				write(1, "\n", 2);
+				write(1, "\n", 1);
 		}
 		else
 		{
@@ -139,7 +140,7 @@ void handle_echo_args(char **args)
 			if (args[i + 1] != NULL)
 				write(1, " ", 1);
 			else
-				write(1, "\n", 2);
+				write(1, "\n", 1);
 
 		}
 		i++;

@@ -45,6 +45,7 @@ int main(int ac, char **av)
         args = get_args(readbuff, "\\ \n");
         if (args == NULL)
         {
+            free(line_cpy);
             continue;
         }
         handle_variables(args);
